@@ -27,7 +27,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -44,7 +44,7 @@ public class AnonymousStats extends PreferenceActivity
     protected static final String ANONYMOUS_LAST_CHECKED = "pref_anonymous_checked_in";
     protected static final String ANONYMOUS_ALARM_SET = "pref_anonymous_alarm_set";
 
-    private CheckBoxPreference mEnableReporting;
+    private SwitchPreference mEnableReporting;
     private Preference mViewStats;
     private Preference btnUninstall;
     private Dialog mOkDialog;
@@ -59,7 +59,7 @@ public class AnonymousStats extends PreferenceActivity
             PreferenceScreen prefSet = getPreferenceScreen();
             
             mPrefs = this.getSharedPreferences(Utilities.SETTINGS_PREF_NAME, 0);
-            mEnableReporting = (CheckBoxPreference) prefSet.findPreference(ANONYMOUS_OPT_IN);
+            mEnableReporting = (SwitchPreference) prefSet.findPreference(ANONYMOUS_OPT_IN);
             mViewStats = (Preference) prefSet.findPreference(VIEW_STATS);
             btnUninstall = prefSet.findPreference(PREF_UNINSTALL);
             

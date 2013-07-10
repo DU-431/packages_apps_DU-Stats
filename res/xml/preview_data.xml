@@ -48,12 +48,6 @@
         style="?android:preferenceInformationStyle"
         android:title="@string/preview_carrier_title"
         android:summary="%s" />
-
-    <Preference
-        android:key="preview_romname"
-        style="?android:preferenceInformationStyle"
-        android:title="@string/preview_romname_title"
-        android:summary="%s" />
     
     <Preference
         android:key="preview_romversion"

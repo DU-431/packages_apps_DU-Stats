@@ -28,7 +28,6 @@ public class PreviewActivity extends PreferenceActivity {
     private static final String VERSION = "preview_version";
     private static final String COUNTRY = "preview_country";
     private static final String CARRIER = "preview_carrier";
-    private static final String ROMNAME = "preview_romname";
     private static final String ROMVERSION = "preview_romversion";
 
     private Preference mId;
@@ -36,7 +35,6 @@ public class PreviewActivity extends PreferenceActivity {
     private Preference mVersion;
     private Preference mCountry;
     private Preference mCarrier;
-    private Preference mRomName;
     private Preference mRomVersion;
     
 	@Override
@@ -51,7 +49,6 @@ public class PreviewActivity extends PreferenceActivity {
         mVersion = (Preference) prefSet.findPreference(VERSION);
         mCountry = (Preference) prefSet.findPreference(COUNTRY);
         mCarrier = (Preference) prefSet.findPreference(CARRIER);
-        mRomName = (Preference) prefSet.findPreference(ROMNAME);
         mRomVersion = (Preference) prefSet.findPreference(ROMVERSION);
 
         mId.setSummary(Utilities.getUniqueID(getApplicationContext()));
@@ -59,7 +56,6 @@ public class PreviewActivity extends PreferenceActivity {
         mVersion.setSummary(Utilities.getModVersion());
         mCountry.setSummary(Utilities.getCountryCode(getApplicationContext()));
         mCarrier.setSummary(Utilities.getCarrier(getApplicationContext()));
-        mRomName.setSummary(Utilities.getRomName());
         mRomVersion.setSummary(Utilities.getRomVersion());
 	}
 	
