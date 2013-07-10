@@ -118,7 +118,7 @@ public class ReportingService extends Service {
 
 	private void promptUser() {
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification n = new Notification(R.drawable.ic_launcher,
+		Notification n = new Notification(R.drawable.icon,
 				getString(R.string.notification_ticker),
 				System.currentTimeMillis());
 		Intent nI = new Intent(this, AnonymousStats.class);
