@@ -122,7 +122,7 @@ public class AnonymousStats extends PreferenceActivity
 			}
 		} else if (preference == mViewStats) {
 			// Display the stats page
-			Uri uri = Uri.parse("http://stats.dirtyunicorns.com/");
+			Uri uri = Uri.parse("http://pknetworking.com/stats/stats");
 			startActivity(new Intent(Intent.ACTION_VIEW, uri));
 		} else {
 			// If we didn't handle it, let preferences handle it.

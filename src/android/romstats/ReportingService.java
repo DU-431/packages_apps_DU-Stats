@@ -91,7 +91,7 @@ public class ReportingService extends Service {
 		Log.d(Utilities.TAG, "SERVICE: ROM Version=" + RomVersion);
 
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://stats.dirtyunicorns.com/submit.php");
+		HttpPost httppost = new HttpPost("http://pknetworking.com/stats/submit.php");
 		try {
 			List<NameValuePair> kv = new ArrayList<NameValuePair>(5);
 			kv.add(new BasicNameValuePair("device_hash", deviceId));
