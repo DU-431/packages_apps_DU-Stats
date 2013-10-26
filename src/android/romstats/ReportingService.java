@@ -43,40 +43,43 @@ public class ReportingService extends Service {
 		return null;
 	}
 
-    @Override
-    public int onStartCommand (Intent intent, int flags, int startId) {
-        if (intent.getBooleanExtra("firstBoot", false)) {
-            promptUser();
-            Log.d(Utilities.TAG, "Prompting user for opt-in.");
-        } else {
-            Log.d(Utilities.TAG, "User has opted in -- reporting.");
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    report();
-                }
-            };
-            thread.start();
-        }
-        return Service.START_REDELIVER_INTENT;
-    }
-    
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		if (intent.getBooleanExtra("firstBoot", false)) {
+			promptUser();
+			Log.d(Utilities.TAG, "Prompting user for opt-in.");
+		} else {
+			Log.d(Utilities.TAG, "User has opted in -- reporting.");
+			Thread thread = new Thread() {
+				@Override
+				public void run() {
+					report();
+				}
+			};
+			thread.start();
+		}
+		return Service.START_REDELIVER_INTENT;
+	}
+
 	private void report() {
 		Log.d(Utilities.TAG, "Reporting stats");
-		
+
 		String deviceId = Utilities.getUniqueID(getApplicationContext());
 		String deviceName = Utilities.getDevice();
 		String deviceVersion = Utilities.getModVersion();
-		String deviceCountry = Utilities.getCountryCode(getApplicationContext());
+		String deviceCountry = Utilities
+				.getCountryCode(getApplicationContext());
 		String deviceCarrier = Utilities.getCarrier(getApplicationContext());
-		String deviceCarrierId = Utilities.getCarrierId(getApplicationContext());
+		String deviceCarrierId = Utilities
+				.getCarrierId(getApplicationContext());
 		String RomName = Utilities.getRomName();
 		String RomVersion = Utilities.getRomVersion();
 
 		String RomStatsUrl = Utilities.getStatsUrl();
-		
+
 		if (RomStatsUrl == null || RomStatsUrl.isEmpty()) {
-			Log.e(Utilities.TAG, "This ROM is not configured for ROM Statistics.");
+			Log.e(Utilities.TAG,
+					"This ROM is not configured for ROM Statistics.");
 			return;
 		}
 
@@ -91,7 +94,8 @@ public class ReportingService extends Service {
 		Log.d(Utilities.TAG, "SERVICE: ROM Version=" + RomVersion);
 
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://stats.dirtyunicorns.com/submit.php");
+		HttpPost httppost = new HttpPost(
+				"http://stats.dirtyunicorns.com/submit.php");
 		try {
 			List<NameValuePair> kv = new ArrayList<NameValuePair>(5);
 			kv.add(new BasicNameValuePair("device_hash", deviceId));
@@ -104,25 +108,30 @@ public class ReportingService extends Service {
 			kv.add(new BasicNameValuePair("rom_version", RomVersion));
 			httppost.setEntity(new UrlEncodedFormEntity(kv));
 			HttpResponse resp = httpclient.execute(httppost);
-			
-			Log.d(Utilities.TAG, "Response is: " + resp.getStatusLine().getStatusCode());
-            getSharedPreferences(Utilities.SETTINGS_PREF_NAME, 0).edit().putLong(AnonymousStats.ANONYMOUS_LAST_CHECKED,
-                    System.currentTimeMillis()).apply();
+
+			Log.d(Utilities.TAG, "Response is: "
+					+ resp.getStatusLine().getStatusCode());
+			getSharedPreferences(Utilities.SETTINGS_PREF_NAME, 0)
+					.edit()
+					.putLong(AnonymousStats.ANONYMOUS_LAST_CHECKED,
+							System.currentTimeMillis()).apply();
 		} catch (Exception e) {
 			Log.e(Utilities.TAG, "Got Exception", e);
 		}
-		
-        ReportingServiceManager.setAlarm(this);
-        stopSelf();
+
+		ReportingServiceManager.setAlarm(this);
+		stopSelf();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void promptUser() {
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification n = new Notification(R.drawable.icon,
 				getString(R.string.notification_ticker),
 				System.currentTimeMillis());
 		Intent nI = new Intent(this, AnonymousStats.class);
-		PendingIntent pI = PendingIntent.getActivity(getApplicationContext(), 0, nI, 0);
+		PendingIntent pI = PendingIntent.getActivity(getApplicationContext(),
+				0, nI, 0);
 		n.setLatestEventInfo(getApplicationContext(),
 				getString(R.string.notification_title),
 				getString(R.string.notification_desc), pI);

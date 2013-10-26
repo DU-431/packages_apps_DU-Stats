@@ -29,13 +29,15 @@ public class Utilities {
 	public static final String TAG = "ROMStats";
 
 	public static String getUniqueID(Context ctx) {
-		TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
 
 		String device_id = digest(tm.getDeviceId());
 		if (device_id == null) {
 			String wifiInterface = SystemProperties.get("wifi.interface");
 			try {
-				String wifiMac = new String(NetworkInterface.getByName(wifiInterface).getHardwareAddress());
+				String wifiMac = new String(NetworkInterface.getByName(
+						wifiInterface).getHardwareAddress());
 				device_id = digest(wifiMac);
 			} catch (Exception e) {
 				device_id = null;
@@ -51,7 +53,7 @@ public class Utilities {
 		if (returnUrl.isEmpty()) {
 			return null;
 		}
-		
+
 		// if the last char of the link is not /, add it
 		if (!returnUrl.substring(returnUrl.length() - 1).equals("/")) {
 			returnUrl += "/";
@@ -61,7 +63,8 @@ public class Utilities {
 	}
 
 	public static String getCarrier(Context ctx) {
-		TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
 		String carrier = tm.getNetworkOperatorName();
 		if ("".equals(carrier)) {
 			carrier = "Unknown";
@@ -70,7 +73,8 @@ public class Utilities {
 	}
 
 	public static String getCarrierId(Context ctx) {
-		TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
 		String carrierId = tm.getNetworkOperator();
 		if ("".equals(carrierId)) {
 			carrierId = "0";
@@ -79,7 +83,8 @@ public class Utilities {
 	}
 
 	public static String getCountryCode(Context ctx) {
-		TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) ctx
+				.getSystemService(Context.TELEPHONY_SERVICE);
 		String countryCode = tm.getNetworkCountryIso();
 		if (countryCode.equals("")) {
 			countryCode = "Unknown";
@@ -102,7 +107,7 @@ public class Utilities {
 	public static String getRomVersion() {
 		return SystemProperties.get("ro.romstats.version");
 	}
-	
+
 	public static long getTimeFrame() {
 		String tFrameStr = SystemProperties.get("ro.romstats.tframe", "7");
 		return Long.valueOf(tFrameStr);
@@ -111,7 +116,8 @@ public class Utilities {
 	public static String digest(String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			return new BigInteger(1, md.digest(input.getBytes())).toString(16).toUpperCase();
+			return new BigInteger(1, md.digest(input.getBytes())).toString(16)
+					.toUpperCase();
 		} catch (Exception e) {
 			return null;
 		}

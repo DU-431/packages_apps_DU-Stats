@@ -23,40 +23,42 @@ import android.preference.PreferenceScreen;
 
 public class PreviewActivity extends PreferenceActivity {
 
-    private static final String UNIQUE_ID = "preview_id";
-    private static final String DEVICE = "preview_device";
-    private static final String VERSION = "preview_version";
-    private static final String COUNTRY = "preview_country";
-    private static final String CARRIER = "preview_carrier";
-    private static final String ROMVERSION = "preview_romversion";
+	private static final String UNIQUE_ID = "preview_id";
+	private static final String DEVICE = "preview_device";
+	private static final String VERSION = "preview_version";
+	private static final String COUNTRY = "preview_country";
+	private static final String CARRIER = "preview_carrier";
+	private static final String ROMVERSION = "preview_romversion";
 
-    private Preference mId;
-    private Preference mDevice;
-    private Preference mVersion;
-    private Preference mCountry;
-    private Preference mCarrier;
-    private Preference mRomVersion;
-    
+	private Preference mId;
+	private Preference mDevice;
+	private Preference mVersion;
+	private Preference mCountry;
+	private Preference mCarrier;
+	private Preference mRomVersion;
+
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.preview_data);
 		PreferenceScreen prefSet = getPreferenceScreen();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mId = (Preference) prefSet.findPreference(UNIQUE_ID);
-        mDevice = (Preference) prefSet.findPreference(DEVICE);
-        mVersion = (Preference) prefSet.findPreference(VERSION);
-        mCountry = (Preference) prefSet.findPreference(COUNTRY);
-        mCarrier = (Preference) prefSet.findPreference(CARRIER);
-        mRomVersion = (Preference) prefSet.findPreference(ROMVERSION);
+		mId = prefSet.findPreference(UNIQUE_ID);
+		mDevice = prefSet.findPreference(DEVICE);
+		mVersion = prefSet.findPreference(VERSION);
+		mCountry = prefSet.findPreference(COUNTRY);
+		mCarrier = prefSet.findPreference(CARRIER);
+		mRomVersion = prefSet.findPreference(ROMVERSION);
 
-        mId.setSummary(Utilities.getUniqueID(getApplicationContext()));
-        mDevice.setSummary(Utilities.getDevice());
-        mVersion.setSummary(Utilities.getModVersion());
-        mCountry.setSummary(Utilities.getCountryCode(getApplicationContext()));
-        mCarrier.setSummary(Utilities.getCarrier(getApplicationContext()));
-        mRomVersion.setSummary(Utilities.getRomVersion());
+		mId.setSummary(Utilities.getUniqueID(getApplicationContext()));
+		mDevice.setSummary(Utilities.getDevice());
+		mVersion.setSummary(Utilities.getModVersion());
+		mCountry.setSummary(Utilities.getCountryCode(getApplicationContext()));
+		mCarrier.setSummary(Utilities.getCarrier(getApplicationContext()));
+		mRomVersion.setSummary(Utilities.getRomVersion());
 	}
-	
+
 }

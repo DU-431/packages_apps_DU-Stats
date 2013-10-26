@@ -20,7 +20,7 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <Preference
-        android:layout="@layout/logo" />
+        android:layout="@layout/thank_you" android:selectable="false"/>
 
     <SwitchPreference
         android:key="pref_anonymous_opt_in"
