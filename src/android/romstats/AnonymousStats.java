@@ -31,7 +31,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.romstats.fragments.ViewStats;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -143,7 +142,15 @@ public class AnonymousStats extends PreferenceActivity implements
 			}
 		} else if (preference == mViewStats) {
 			// Display the stats page
-			startActivity(new Intent(this, ViewStats.class));
+			Intent intent = new Intent (this, ViewStats.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			// What this does is finish our top application, so when and if the user
+			// exits via the ViewStats.java class, it will exit the application, instead
+			// of navigate back to this class. However, if the user selects to go back
+			// via the ActionBar with the Up navigation I implemented, it will bring the user
+			// back to this (Preference)Activity.
+			finish();
 		} else {
 			// If we didn't handle it, let preferences handle it.
 			return super.onPreferenceTreeClick(preferenceScreen, preference);
